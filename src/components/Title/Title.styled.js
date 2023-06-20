@@ -4,7 +4,7 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 300px;
+  width: 350px;
 `;
 
 const MainTitle = styled.h2``;

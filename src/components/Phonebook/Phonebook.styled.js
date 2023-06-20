@@ -1,16 +1,18 @@
 import styled from 'styled-components';
-import { Form, Field } from 'formik';
+// import { Form, Field } from 'formik';
+import 'react-phone-number-input/style.css';
+import Input from 'react-phone-number-input/input';
 
-const FormPhone = styled(Form)`
+export const FormPhone = styled.form`
   padding: 30px;
   border: 1px solid gray;
   display: flex;
   flex-direction: column;
-  width: fit-content;
+  width: 100%;
   gap: 10px;
 `;
 
-const FieldPhone = styled(Field)`
+export const FieldPhoneName = styled.input`
   display: flex;
   flex-direction: column;
   font-family: 'Roboto', sans-serif;
@@ -21,9 +23,23 @@ const FieldPhone = styled(Field)`
   padding: 10px;
   box-sizing: border-box;
   font-size: 14px;
+  padding-left: 50px;
+`;
+export const FieldPhoneNumber = styled(Input)`
+  display: flex;
+  flex-direction: column;
+  font-family: 'Roboto', sans-serif;
+  outline: 0;
+  background: #f2f2f2;
+  width: 100%;
+  border: 0;
+  padding: 10px;
+  box-sizing: border-box;
+  font-size: 14px;
+  padding-left: 50px;
 `;
 
-const ButtonPhone = styled.button`
+export const ButtonPhone = styled.button`
   font-family: 'Roboto', sans-serif;
   text-transform: uppercase;
   outline: 0;
@@ -43,14 +59,15 @@ const ButtonPhone = styled.button`
     background: #43a047;
   }
 `;
-const NameInput = styled.span`
+export const NameInput = styled.span`
   padding-top: 10px;
 `;
-const ErrorValidate = styled.p`
+export const ErrorValidate = styled.p`
   color: red;
   padding: 0;
   margin: 0 0 10px 0;
   font-size: 14px;
 `;
-
-export { FormPhone, FieldPhone, ButtonPhone, NameInput, ErrorValidate };
+export const ContainerInputNumber = styled.div`
+  position: relative;
+`;

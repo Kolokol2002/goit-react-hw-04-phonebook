@@ -1,58 +1,80 @@
 import {
   FormPhone,
-  FieldPhone,
+  FieldPhoneName,
+  FieldPhoneNumber,
   ButtonPhone,
   NameInput,
   ErrorValidate,
+  ContainerInputNumber,
 } from './Phonebook.styled';
+import PropTypes from 'prop-types';
 import * as Yup from 'yup';
 import 'yup-phone-lite';
-import { Formik, ErrorMessage } from 'formik';
-import PropTypes from 'prop-types';
+import { yupResolver } from '@hookform/resolvers/yup';
 import { nanoid } from 'nanoid';
+import { useForm } from 'react-hook-form';
+import { getCountryCallingCode } from 'react-phone-number-input/input';
+import Select from 'components/Select/Select';
+import { useState } from 'react';
 
 const Phonebook = ({ getContacts }) => {
+  const [countryNumberCode, setCountryNumberCode] = useState(
+    () => `+${getCountryCallingCode('UA')}`
+  );
+  const [countryCode, setCountryCode] = useState('UA');
+
   const scheme = Yup.object().shape({
     name: Yup.string().required('Required!'),
     number: Yup.string()
-      .phone('UA', 'Number is not valid')
+      .phone(countryCode, 'Number is not valid')
       .required('Required!'),
   });
 
-  const handleSubmit = async (data, helpers) => {
-    const { name, number } = data;
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm({ resolver: yupResolver(scheme) });
 
+  const onGetChangeSelect = value => {
+    setCountryCode(value);
+    setCountryNumberCode(`+${getCountryCallingCode(value)}`);
+  };
+  // onGetChangeSelect('UA');
+
+  const onSubmit = async ({ name, number }) => {
     const isResetForm = getContacts({
       name,
       number,
       id: nanoid(),
     });
 
-    isResetForm && helpers.resetForm();
+    if (isResetForm) {
+      reset();
+      setCountryNumberCode(`+${getCountryCallingCode(countryCode)}`);
+    }
   };
 
+  // const onChangeInput = ({ target }) => {
+  //   console.log(target.value);
+  // };
+
   return (
-    <Formik
-      initialValues={{ name: '', number: '' }}
-      onSubmit={handleSubmit}
-      validationSchema={scheme}
-    >
-      <FormPhone>
-        <NameInput>Name</NameInput>
-        <FieldPhone type="text" name="name" />
-        <ErrorMessage name="name">
-          {msg => <ErrorValidate>{msg}</ErrorValidate>}
-        </ErrorMessage>
+    <FormPhone onSubmit={handleSubmit(onSubmit)}>
+      <NameInput>Name</NameInput>
+      <FieldPhoneName {...register('name')} />
+      {errors.name && <ErrorValidate>{errors.name.message}</ErrorValidate>}
 
-        <NameInput>Number</NameInput>
-        <FieldPhone type="tel" name="number" />
-        <ErrorMessage name="number">
-          {msg => <ErrorValidate>{msg}</ErrorValidate>}
-        </ErrorMessage>
+      <NameInput>Number</NameInput>
+      <ContainerInputNumber>
+        <FieldPhoneNumber {...register('number')} />
+        <Select onGetChangeSelect={onGetChangeSelect} />
+      </ContainerInputNumber>
+      {errors.number && <ErrorValidate>{errors.number.message}</ErrorValidate>}
 
-        <ButtonPhone type="submit">Add Contact</ButtonPhone>
-      </FormPhone>
-    </Formik>
+      <ButtonPhone type="submit">Add Contact</ButtonPhone>
+    </FormPhone>
   );
 };
 
