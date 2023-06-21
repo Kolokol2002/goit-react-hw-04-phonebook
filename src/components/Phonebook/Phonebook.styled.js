@@ -1,7 +1,5 @@
 import styled from 'styled-components';
 // import { Form, Field } from 'formik';
-import 'react-phone-number-input/style.css';
-import Input from 'react-phone-number-input/input';
 
 export const FormPhone = styled.form`
   padding: 30px;
@@ -10,34 +8,51 @@ export const FormPhone = styled.form`
   flex-direction: column;
   width: 100%;
   gap: 10px;
+
+  input {
+    display: flex;
+    flex-direction: column;
+    font-family: 'Roboto', sans-serif;
+    outline: 0 !important;
+    background: #f2f2f2 !important;
+    width: 100% !important;
+    border: 0 !important;
+    padding: 10px;
+    box-sizing: border-box;
+    font-size: 14px !important;
+  }
+  .country-list {
+    width: 350px;
+    overflow-x: hidden;
+  }
 `;
 
-export const FieldPhoneName = styled.input`
-  display: flex;
-  flex-direction: column;
-  font-family: 'Roboto', sans-serif;
-  outline: 0;
-  background: #f2f2f2;
-  width: 100%;
-  border: 0;
-  padding: 10px;
-  box-sizing: border-box;
-  font-size: 14px;
-  padding-left: 50px;
-`;
-export const FieldPhoneNumber = styled(Input)`
-  display: flex;
-  flex-direction: column;
-  font-family: 'Roboto', sans-serif;
-  outline: 0;
-  background: #f2f2f2;
-  width: 100%;
-  border: 0;
-  padding: 10px;
-  box-sizing: border-box;
-  font-size: 14px;
-  padding-left: 50px;
-`;
+// export const FieldPhone = styled.input`
+//   display: flex;
+//   flex-direction: column;
+//   font-family: 'Roboto', sans-serif;
+//   outline: 0;
+//   background: #f2f2f2;
+//   width: 100%;
+//   border: 0;
+//   padding: 10px;
+//   box-sizing: border-box;
+//   font-size: 14px;
+//   padding-left: 50px;
+// `;
+// export const FieldPhoneNumber = styled(PhoneInput)`
+//   display: flex;
+//   flex-direction: column;
+//   font-family: 'Roboto', sans-serif;
+//   outline: 0;
+//   background: #f2f2f2;
+//   width: 100%;
+//   border: 0;
+//   padding: 10px;
+//   box-sizing: border-box;
+//   font-size: 14px;
+//   padding-left: 50px;
+// `;
 
 export const ButtonPhone = styled.button`
   font-family: 'Roboto', sans-serif;
@@ -69,5 +84,5 @@ export const ErrorValidate = styled.p`
   font-size: 14px;
 `;
 export const ContainerInputNumber = styled.div`
-  position: relative;
+  /* position: relative; */
 `;
