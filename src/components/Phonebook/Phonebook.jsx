@@ -20,9 +20,9 @@ function Phonebook({ getContacts }) {
     register,
     handleSubmit,
     reset,
-
     setValue,
     control,
+    setFocus,
     formState: { errors },
   } = useForm({
     defaultValues: {
@@ -36,6 +36,8 @@ function Phonebook({ getContacts }) {
       number,
       id: nanoid(),
     });
+
+    setFocus('name');
 
     if (isResetForm) {
       reset();
@@ -57,19 +59,18 @@ function Phonebook({ getContacts }) {
         control={control}
         name="number"
         rules={{ required: 'Required!!!' }}
-        render={({ field }) => {
+        render={({ field: { name, ref } }) => {
           return (
             <PhoneInput
-              {...field}
-              inputExtraProps={{
-                ref: field.ref,
-              }}
+              inputProps={{ name, ref }}
               onChange={(value, country) => {
                 setNumberValue(value);
                 setValue('number', value);
                 setDialCode(country.dialCode);
+
                 if (country.dialCode !== dialCode) {
                   setNumberValue(country.dialCode);
+                  setFocus('number');
                   return;
                 }
               }}
